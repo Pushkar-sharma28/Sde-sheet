@@ -1,0 +1,83 @@
+First approach is simply change row and columns with -1 then change them again t.c. for this will be : O(n^3)
+second appraoch : make extra two arrays and mark them 
+
+Link : https://www.codingninjas.com/codestudio/problems/set-matrix-zeros_8230862?challengeSlug=striver-sde-challenge&leftPanelTab=0
+
+```
+void setZeros(vector<vector<int>> &matrix)
+{
+	// Write your code here.
+	int n=matrix.size(),m=matrix[0].size();
+	int col[m]={0},row[n]={0};
+	for(int i=0;i<n;i++){
+		for(int j=0;j<m;j++){
+                  if (matrix[i][j] == 0) {
+                    col[j] = -1;
+                    row[i] = -1;
+                  }
+                }
+        }
+    for(int i=0;i<n;i++){
+		if(row[i]==-1){
+			for(int j=0;j<m;j++)
+			   matrix[i][j]=0;
+		}
+	}
+	for(int i=0;i<m;i++){
+		if(col[i]==-1){
+			for(int j=0;j<n;j++){
+				matrix[j][i]=0;
+			}
+		}
+	}
+	return ;
+}
+```
+
+
+
+Third most optimized approach take first row and column to mark zeroes and take two variables to mark these rows itself
+code : 
+
+```
+
+vector<vector<int>> zeroMatrix(vector<vector<int>> &matrix, int n, int m) {
+    int col0 = 1;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (matrix[i][j] == 0) {
+                // mark i-th row:
+                matrix[i][0] = 0;
+
+                // mark j-th column:
+                if (j != 0)
+                    matrix[0][j] = 0;
+                else
+                    col0 = 0;
+            }
+        }
+    }
+    for (int i = 1; i < n; i++) {
+        for (int j = 1; j < m; j++) {
+            if (matrix[i][j] != 0) {
+                // check for col & row:
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+    if (matrix[0][0] == 0) {
+        for (int j = 0; j < m; j++) {
+            matrix[0][j] = 0;
+        }
+    }
+    if (col0 == 0) {
+        for (int i = 0; i < n; i++) {
+            matrix[i][0] = 0;
+        }
+    }
+
+    return matrix;
+}
+```
