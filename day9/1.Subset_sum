@@ -1,5 +1,5 @@
 subset sum : try out all possible paths
-
+T.C : o(2^n)
 code :
 
 void func(int ind,vector<int> &num,vector<int> &ds,int sum){
