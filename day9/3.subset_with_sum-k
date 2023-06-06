@@ -1,0 +1,20 @@
+void func(int ind,vector<int> &ds,vector<vector<int>> &ans,vector<int> &arr,int k,int sum){
+    if(sum==k){
+        ans.push_back(ds);
+    }
+    for(int i=ind;i<arr.size();i++){
+        ds.push_back(arr[i]);
+        sum+=arr[i];
+        func(i+1,ds,ans,arr,k,sum);
+        ds.pop_back();
+        sum-=arr[i];
+    }
+}
+vector<vector<int>> findSubsetsThatSumToK(vector<int> arr, int n, int k)
+{
+    // Write your code here.
+    vector<vector<int>> ans;
+    vector<int> ds;
+    func(0,ds,ans,arr,k,0);
+    return ans;
+}
