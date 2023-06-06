@@ -1,7 +1,7 @@
 subset sum : try out all possible paths
 T.C : o(2^n)
-code :
 
+code :
 void func(int ind,vector<int> &num,vector<int> &ds,int sum){
 
 if(ind==num.size()){
@@ -21,4 +21,15 @@ vector<int> subsetSum(vector<int> &num)
     func(0,num,ans,0);
     sort(ans.begin(),ans.end());
     return ans;
+}
+
+//For loop method for doing the same stuff:
+
+void func(int ind,vector<int> &num,vector<int> &ds,int sum){
+ds.push_back(sum);
+for(int i=ind;i<num.size();i++){
+    sum+=num[i];
+    func(i+1,num,ds,sum);
+    sum-=num[i];
+  }
 }
