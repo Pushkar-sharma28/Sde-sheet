@@ -114,3 +114,23 @@ vector<int> verticalOrderTraversal(TreeNode<int> *root)
     }
     return ans;
 }
+
+//LEVEL ORDER TRAVERSAL 
+vector<int> getLevelOrder(BinaryTreeNode<int> *root)
+{
+    //  Write your code here.
+    vector<int> ans;
+    if(!root) return ans;
+
+    queue<BinaryTreeNode<int> *> que;
+    que.push(root);
+    while(!que.empty()){
+       auto node=que.front();
+       ans.push_back(node->val);
+       que.pop();
+       
+       if(node->left) que.push(node->left);
+       if(node->right) que.push(node->right);
+    }
+    return ans;
+}
