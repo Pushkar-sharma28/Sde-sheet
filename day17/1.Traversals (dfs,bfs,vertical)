@@ -40,3 +40,77 @@ vector<int> getPostOrderTraversal(TreeNode *root)
     reverse(ans.begin(),ans.end());
     return ans;
 }
+
+//ALL IN ONE TRAVERSAL 
+vector<vector<int>> getTreeTraversal(BinaryTreeNode<int> *root){
+    // Write your code here.
+    vector<vector<int>> ans;
+    if(!root) return ans;
+    vector<int> pre,inorder,post;
+    stack<pair<BinaryTreeNode<int>*,int>> st;
+    st.push({root,1});
+
+    while(!st.empty()){
+       auto it = st.top();
+       st.pop();
+
+       //preorder
+       if(it.second==1){
+           pre.push_back(it.first->data);
+           it.second++;
+           st.push(it);
+
+           if(it.first->left)
+              st.push({it.first->left,1});
+       }
+       //inorder
+       else if(it.second==2){
+           inorder.push_back(it.first->data);
+           it.second++;
+           st.push(it);
+
+           if(it.first->right)
+              st.push({it.first->right,1});
+        }
+       else{
+           post.push_back(it.first->data);
+       }
+    }
+
+    ans.push_back(inorder);
+    ans.push_back(pre);
+    ans.push_back(post);
+    return ans;
+}
+
+//Vertical traversal 
+
+
+vector<int> verticalOrderTraversal(TreeNode<int> *root)
+{
+    //    Write your code here.
+    vector<int> ans;
+    if(!root) return ans;
+    map<int,vector<int>> mpp;
+    queue<pair<TreeNode<int>*,int>> que;
+    que.push({root,0});
+
+    while(!que.empty()){
+       int siz=que.size();
+       for(int i=0;i<siz;i++){
+               TreeNode<int> * node=que.front().first;
+               int x=que.front().second;
+               mpp[x].push_back(node->data);
+               que.pop();
+
+               if(node->left) que.push({node->left,x-1});
+               if(node->right) que.push({node->right,x+1});
+       }
+    }
+    for(auto it : mpp){
+       for(auto vec : it.second){
+        ans.push_back(vec);   
+       }
+    }
+    return ans;
+}
