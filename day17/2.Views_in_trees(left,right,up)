@@ -1,0 +1,83 @@
+//LEFT VIEW OF BINARY TREE
+
+code : 
+T.C : O(n)
+S.C : O(n)
+vector<int> getLeftView(TreeNode<int> *root)
+{
+    //    Write your code here
+    vector<int> ans;
+    if(!root) return ans;
+    queue<TreeNode<int> *> que;
+    que.push(root);
+    while(!que.empty()){
+        int siz=que.size();
+        for(int i=0;i<siz;i++){
+            auto node=que.front();
+            que.pop();
+            if(i==0) ans.push_back(node->data);
+            if(node->left) que.push(node->left);
+            if(node->right) que.push(node->right);
+        }
+    }
+
+    return ans;
+}
+
+//BOTTOM VIEW OF BINARY TREE
+O(n+n) sc and tc will be O(n)
+vector<int> bottomView(BinaryTreeNode<int> * root){
+
+    // Write your code here.
+     vector<int> ans;
+    if(!root) return ans;
+    map<int,int> mpp;
+
+    queue<pair<BinaryTreeNode<int>*,int>> que;
+    que.push({root,0});
+
+    while(!que.empty()){
+           auto node=que.front().first;
+           int vertical=que.front().second;
+           mpp[vertical]=node->data;
+           que.pop();
+
+           if(node->left) que.push({node->left,vertical-1});
+           if(node->right) que.push({node->right,vertical+1});
+    }
+    for(auto it: mpp){
+        ans.push_back(it.second);
+    }
+    return ans;
+}
+
+//TOP VIEW
+same concept just with the change that elements will be entered at the very first
+vector<int> getTopView(TreeNode<int> *root) {
+    // Write your code here.
+    vector<int> ans;
+    if(!root) return ans;
+    map<int,int> mpp;
+
+    queue<pair<TreeNode<int>*,int>> que;
+    que.push({root,0});
+
+    while(!que.empty()){
+           auto node=que.front().first;
+           int vertical=que.front().second;
+           if(mpp.find(vertical)==mpp.end())
+           mpp[vertical]=node->val;
+           que.pop();
+
+           if(node->left) que.push({node->left,vertical-1});
+           if(node->right) que.push({node->right,vertical+1});
+    }
+    for(auto it: mpp){
+        ans.push_back(it.second);
+    }
+    return ans;
+
+}
+
+
+
