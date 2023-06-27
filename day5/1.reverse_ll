@@ -1,0 +1,20 @@
+reverse a list 
+iterative method : 
+
+LinkedListNode<int> *reverseLinkedList(LinkedListNode<int> *head)
+{
+    // Write your code here
+    LinkedListNode<int> * prev=NULL,*curr=head,*forw=head;
+    while(curr!=NULL){
+        forw=curr->next;
+        curr->next=prev;
+
+        prev=curr;
+        curr=forw;
+    }
+    return prev;
+}
+
+recursive method : 
+
+
