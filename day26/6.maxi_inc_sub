@@ -1,0 +1,43 @@
+#include <bits/stdc++.h> 
+/*
+all increasing subsequence 
+take not take , previndex 
+
+*/
+int ans(vector<int> &arr,int ind,int n,int prev_ind
+      ,vector<vector<int>> &dp){
+    if(ind==n){
+		return 0;
+	}
+    if(dp[ind][prev_ind+1]!=-1) return dp[ind][prev_ind+1];
+
+    int nottake=0;
+	nottake=ans(arr,ind+1,n,prev_ind,dp);
+    
+	int take=0;
+	if(prev_ind==-1 || arr[prev_ind] < arr[ind])
+        take = arr[ind]+ans(arr,ind+1,n,ind,dp);
+    
+	return dp[ind][prev_ind+1]=max(take,nottake);
+
+}
+int maxIncreasingDumbbellsSum(vector<int> &arr, int n)
+{
+	// Write your code here
+	vector<vector<int>> dp(n+1,vector<int> (n+1,-1));
+
+	for(int ind=n-1;ind>=0;ind--){
+		for(int prev_ind=ind-1;prev_ind>=-1;prev_ind--){
+            
+	int nottake=0;
+	nottake=dp[ind+1][prev_ind+1];
+    
+	int take=0;
+	if(prev_ind==-1 || arr[prev_ind] < arr[ind])
+        take = arr[ind]+dp[ind+1][ind+1];
+    
+	 dp[ind][prev_ind+1]=max(take,nottake);	
+		}
+	}
+	return dp[0][0];
+}
