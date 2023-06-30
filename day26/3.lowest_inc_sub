@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+int ans(int arr[],int n,int ind,int prev_index,vector<vector<int>> &dp){
+
+    if(ind == n)
+        return 0;
+        
+    if(dp[ind][prev_index+1]!=-1)
+        return dp[ind][prev_index+1];
+    
+    int len = ans(arr,n,ind+1,prev_index,dp);
+    
+    if(prev_index == -1 || arr[ind] > arr[prev_index]){
+        len = max(len ,1 + ans(arr,n,ind+1,ind,dp));
+    }
+    
+    return dp[ind][prev_index+1] = len;
+}
+int longestIncreasingSubsequence(int arr[], int n)
+{
+    // Write Your Code hdere
+    
+    int prev=-1;
+    vector<vector<int>> dp(n,vector<int>(n+1,-1));
+    return ans(arr,n,0,prev,dp);
+}
+
+
+optiimizing space : 
+
+int longestIncreasingSubsequence(int arr[], int n)
+{
+    // Write Your Code hdere
+    
+    int prev=-1;
+    vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+    for(int ind=n-1;ind>=0;ind--){
+        for(int prev_ind=ind-1;prev_ind>=-1;prev_ind--){
+               int len=0+dp[ind+1][prev_ind+1];
+
+               if(prev_ind==-1 || arr[ind]>arr[prev_ind]){
+                   len=max(len,1+dp[ind+1][ind+1]);
+               }
+               dp[ind][prev_ind+1]=len;
+        }
+    }
+    return dp[0][0];
+}
