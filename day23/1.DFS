@@ -1,2 +1,30 @@
-this is a code 
+void dfs(int node,vector<int> &ds,vector<int> adj[],vector<int> &visi){
+    visi[node]=1;
+    ds.push_back(node);
+    for(auto it: adj[node] ){
+        if(!visi[it])
+            dfs(it,ds,adj,visi);
+    }
+return ;
+}
+vector<vector<int>> depthFirstSearch(int v, int e, vector<vector<int>> &edges)
+{
+    // Write your code here
+    vector<int> adj[v];
+    for(int i=0;i<e;i++){
+        adj[edges[i][0]].push_back(edges[i][1]);
+        adj[edges[i][1]].push_back(edges[i][0]);
+    }
+    vector<vector<int>> ans;
+    vector<int> visi(v,0);
+
+    for(int i=0;i<v;i++){
+      if (!visi[i]) {
+        vector<int> ds;
+        dfs(i, ds, adj , visi);
+        ans.push_back(ds);
+      }
+    }
+    return ans;
+}
 
