@@ -1,0 +1,59 @@
+#include <bits/stdc++.h> 
+int ans(vector<vector<int>> &grid,int n,int m,vector<vector<int>> &dp){
+    if(n==0 && m==0) return grid[n][m];
+    if(n<0 || m<0) return 1e9;
+
+    if(dp[n][m]!=-1) return dp[n][m];
+    int up=ans(grid,n-1,m,dp);
+
+    int left=ans(grid,n,m-1,dp);
+
+    return dp[n][m]=grid[n][m]+min(up,left);
+}
+int minSumPath(vector<vector<int>> &grid) {
+    // Write your code here.
+    int n=grid.size(),m=grid[0].size();
+    vector<vector<int>> dp(n,vector<int>(m,0));
+    dp[0][0]=grid[0][0];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(i==0 && j==0) continue;
+            int down=1e9,right=1e9;
+            if(i>0) 
+            down=dp[i-1][j];
+            if(j>0)
+            right=dp[i][j-1];
+
+            dp[i][j]=grid[i][j]+min(down,right);
+        }
+    }
+    return dp[n-1][m-1];
+}
+
+
+#SPACE OPTIMIZATION
+
+class Solution {
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+    int n=grid.size();
+    int m=grid[0].size();
+        
+    vector<int> prev(m,0),curr(m,0);
+    curr[0]=grid[0][0];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){   
+          if(i==0 && j==0) continue;
+            
+          int l=1e9;
+          if(i>0) l=prev[j];;
+            
+          int r=1e9;
+          if(j>0) r=curr[j-1];
+            
+          curr[j]=grid[i][j]+min(l,r);
+      }
+        prev=curr;
+     }
+    return prev[m-1];
+   
