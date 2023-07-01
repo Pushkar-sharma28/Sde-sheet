@@ -1,0 +1,34 @@
+#include <bits/stdc++.h> 
+bool ans(int i,vector<int>&arr,int target){
+     if(target==0) return 1;
+     if(i==0){
+         return target-arr[0]==0 ? 1:0;
+     }
+     bool l=0;
+     if(arr[i]<=target)
+     l=ans(i-1,arr,target-arr[i]);
+     bool r=ans(i-1,arr,target);
+     return l || r;
+}
+bool subsetSumToK(int n, int k, vector<int> &arr) {
+    // Write your code here.
+    vector<vector<bool>> dp(n,vector<bool> (k+1,false));
+    
+    for(int i=0; i<n; i++){
+        dp[i][0] = true;
+    }
+    if(arr[0]<=k)
+        dp[0][arr[0]] = true;
+
+    for(int i=1;i<n;i++){
+        for(int j=1;j<=k;j++){
+          bool l=false;
+          if(arr[i]<=j)
+          l=dp[i-1][j-arr[i]];
+          bool r=dp[i-1][j];
+
+          dp[i][j]=l || r;
+        }
+    }
+    return dp[n-1][k];
+}
