@@ -1,0 +1,21 @@
+1) just to loop and one by one insert element
+2) mid element approach 
+3) this approach : 
+
+class Solution {
+public:
+    TreeNode *dfs(int &i,vector<int> &preorder,int ub){
+    if(i==preorder.size() || preorder[i] > ub) return NULL;
+
+    TreeNode* root = new TreeNode(preorder[i++]);
+
+    root->left=dfs(i,preorder,root->val);
+    root->right=dfs(i,preorder,ub);
+
+    return root;
+    }
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+    int i=0;
+    return dfs(i,preorder,INT_MAX);
+    }
+};
