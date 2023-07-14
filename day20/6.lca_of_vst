@@ -1,0 +1,19 @@
+int a,b;
+    if(p->data>q->data)
+    {    b=p->data;
+         a=q->data;
+    }
+    else {
+         a=p->data;
+         b=q->data;
+    }
+    TreeNode *curr=root;
+    while(curr){
+    if(curr->data > a && curr->data < b)  return curr;
+    
+    if(curr->data == a || curr->data == b) return curr;
+        
+    if(curr->data > a && curr->data > b) curr=curr->left;
+    else if(curr->data <a && curr->data < b) curr=curr->right;
+    }
+    return curr;
